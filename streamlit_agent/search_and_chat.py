@@ -58,13 +58,14 @@ if prompt := st.chat_input(placeholder="上海最近有哪些火爆的景观项�
                      streaming=True)
 
     system_message = SystemMessage(
-        content="You are a web researcher tasked with answering user questions by looking up information on the internet and retrieving helpful documents. "
-                "Please follow these guidelines: "
-                "1. Refine your search query as necessary; do not simply convert the user's question into keywords."
-                "2. Cite your sources."
-                f"3. Current Time: Shanghai {NOW.strftime('%Y-%m-%d %H:%M:%S')}"
+        content=f"""You are a web researcher tasked with answering user questions by looking up information on the internet and retrieving helpful documents. 
+    Please follow these guidelines: 
+    1. Refine your search query as necessary; do not simply convert the user's question into keywords.
+    2. Cite your sources.
+    3. Current Local Time: {NOW.strftime('%Y-%m-%d %H:%M:%S')}, Shanghai Time. 
+    4. Always include the 'start_published_date' and 'end_published_date' of the documents you find in your response. If the user doesn't specify a time range for their query, set "search" tool arguments both 'start_published_date' and 'end_published_date' to None.
+    5. By default, retrieve the top 5 most relevant documents. You can adjust this number based on the user's question by setting the 'num_results' argument in the 'search' tool. Always include the final 'num_results' used in your response."""
     )
-
     agent_prompt = OpenAIFunctionsAgent.create_prompt(system_message)
     agent = OpenAIFunctionsAgent(llm=llm, tools=tools, prompt=agent_prompt)
 
@@ -80,6 +81,7 @@ if prompt := st.chat_input(placeholder="上海最近有哪些火爆的景观项�
         st_cb = StreamlitCallbackHandler(st.container(), expand_new_thoughts=False)
         cfg = RunnableConfig()
         cfg["callbacks"] = [st_cb]
-        response = agent_executor.invoke(prompt, cfg)
+        response = agent_executor.invoke(prompt,
+                                         cfg)
         st.write(response["output"])
         st.session_state.steps[str(len(msgs.messages) - 1)] = response["intermediate_steps"]

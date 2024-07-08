@@ -1,5 +1,6 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
+from typing import Optional
 
 from dotenv import load_dotenv
 from exa_py import Exa
@@ -11,31 +12,38 @@ exa = Exa(api_key=os.environ["EXA_API_KEY"])
 
 
 @tool
-def search(query: str, start_published_date: datetime, end_published_date: datetime):
+def search(query: str,
+           num_results: int = 5,
+           start_published_date: datetime = None,
+           end_published_date: datetime = None):
     """Search for a webpage based on the query."""
-    start_published_date_str = start_published_date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    end_published_date_str = end_published_date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    if start_published_date:
+        start_published_date = start_published_date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    if end_published_date:
+        end_published_date = end_published_date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
+    print(f"start_published_date, end_published_date: {start_published_date, end_published_date}")
     return exa.search(f"{query}",
                       use_autoprompt=True,
-                      num_results=10,
+                      num_results=num_results,
                       include_domains=["mooool.com", "gooood.cn",
-                                       "baike.baidu.com",
+                                       "baike.baidu.com", "zh.wikipedia.org"
                                        "mooool.com", "archiposition.com",
                                        "archdaily.cn", "arch-exist.com",
                                        "tlaidesign.com", "hhlloo.com"],
                       type="neural",
-                      start_published_date=start_published_date_str,
-                      end_published_date=end_published_date_str,
+                      start_published_date=start_published_date,
+                      end_published_date=end_published_date
                       )
 
 
 @tool
-def find_similar(url: str):
+def find_similar(url: str, num_results: int = 5):
     """Search for webpages similar to a given URL.
     The url passed in should be a URL returned from `search`.
     """
     return exa.find_similar(url,
-                            num_results=5)
+                            num_results=num_results)
 
 
 @tool
