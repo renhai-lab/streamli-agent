@@ -1,0 +1,25 @@
+name: 建筑景观项目检索
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - langchain
+  - langchain-community
+  - python-dotenv
+  - streamlit
+#  - requests
+#  - beautifulsoup4
+#  - pymongo
+#  - loguru
+#  - pydantic
+#  - numpy
+#  - pandas
+#  - pyyaml
+#  - tiktoken
+#  - chromadb
+#  - aiofiles
+  - pip:
+#      - pypushdeer
+      - langchain-openai
+      - streamlit
+      - langchain-exa
