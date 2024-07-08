@@ -25,8 +25,6 @@ OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL")
 
 NOW = datetime.now()
 
-
-
 tools = [search, get_contents, find_similar]
 
 msgs = StreamlitChatMessageHistory()
@@ -53,9 +51,6 @@ for idx, msg in enumerate(msgs.messages):
 if prompt := st.chat_input(placeholder="上海最近有哪些火爆的景观项目?"):
     st.chat_message("user").write(prompt)
 
-    if not OPENAI_API_KEY:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
 
     llm = ChatOpenAI(model="gpt-4o",
                      base_url=OPENAI_BASE_URL,
