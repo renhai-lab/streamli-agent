@@ -2,7 +2,9 @@
 
 本项目来源于模版[search_and_chat](https://github.com/langchain-ai/streamlit-agent/blob/main/streamlit_agent/search_and_chat.py)，配置[Exa](https://dashboard.exa.ai/)工具以进行建筑景观相关网站的搜索，专用于检索建筑和景观项目、基于 [Streamlit](https://streamlit.io/) 的聊天应用。
 
-<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=112749887621576&bvid=BV1aehZe9EQX&cid=500001608745364&p=1" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+![](https://oss.renhai.online/halo/2024/07/548acc4af083defb2699ac94bac2be68.png)
+
+
 
 > 来源网站包含："mooool.com", "gooood.cn", "baike.baidu.com",  "mooool.com", "archiposition.com", "archdaily.cn", "arch-exist.com", "tlaidesign.com", "hhlloo.com"
 
